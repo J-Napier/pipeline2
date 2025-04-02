@@ -1,0 +1,16 @@
+hosts: localhost
+  gather_facts: no
+  vars_prompt:
+    - name: user_input
+      prompt: "Enter a string"
+      private: no  # Set to yes to hide input
+  tasks:
+    - name: Validate user input against pattern
+      debug:
+        msg: "Valid input!"
+      when: user_input is match("^[a-zA-Z0-9_-]+$")
+
+    - name: Invalid input message
+      debug:
+        msg: "Invalid input! Please enter only alphanumeric characters, hyphens, or underscores."
+      when: user_input is not match("^[a-zA-Z0-9_-]+$")
